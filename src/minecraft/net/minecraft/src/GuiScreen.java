@@ -22,7 +22,7 @@ import org.getspout.spout.packet.*;
 import org.spoutcraft.spoutcraftapi.gui.*;
 
 //Spout End
-
+import java.io.UnsupportedEncodingException;//cnmode
 public class GuiScreen extends Gui {
 
 	protected Minecraft mc;
@@ -37,7 +37,8 @@ public class GuiScreen extends Gui {
 	public GenericGradient bg; 
 	public Screen screen = null;
 	//Spout End
-	
+	private boolean cnMode;//cnmode
+	public static String code;//cnmode
 	public void drawScreenPre(int x, int y, float z) {
 		drawWidgets(x, y, z);
 		drawScreen(x,y,z);
@@ -259,9 +260,42 @@ public class GuiScreen extends Gui {
 					this.mc.toggleFullscreen();
 					return;
 				}
-				this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+				//this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());  //cnmode del this line
 			}
 			//Spout - End of vanilla code
+			//cnmode start
+			char chcode;
+			chcode = Keyboard.getEventCharacter();
+			if (chcode > 0x80) {//判断是否为中文(GBK)
+				cnMode = true;//中文输入多个文字只会引发一次按键事件,为了中英文混输的需要,标记取消检测,进入中文连续输入模式
+				Keyboard.next();//继续读取中文下半部分以获得一个完整字符
+				//TODO:添加Keyboard.next()为真的判断
+				char chcode2 = Keyboard.getEventCharacter();
+				try {
+					//System.out.println("chcode="+(int)chcode+"="+chcode+","+Keyboard.getEventKey());
+					//System.out.println("chcode2="+(int)chcode2+"="+chcode2+","+Keyboard.getEventKey());
+					//System.out.println(code);
+					chcode = new String(new byte[]{(byte) chcode, (byte) chcode2}, code).toCharArray()[0];//将gbk编码转换为unicode编码
+					//TODO:若繁体中文操作系统，则此处应该可能为"big5"
+					//并不支持GB18030及完整unicode的输入
+
+					//System.out.println("chcode3="+(int)chcode+"="+chcode+","+Keyboard.getEventKey());
+					keyTyped(chcode, Keyboard.getEventKey());
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			} else {
+				if (cnMode || Keyboard.getEventKeyState()) {//若为中文连续输入过程中则取消检测
+					//System.out.println("chcode="+(int)chcode+"="+chcode+","+Keyboard.getEventKey());
+					if (Keyboard.getEventKey() == Keyboard.KEY_F12) {
+						chcode = '\247';
+					}
+					keyTyped(chcode, Keyboard.getEventKey());
+				}
+			}
+
+			//cnmode end
+
 		}
 		//Spout End
 	}

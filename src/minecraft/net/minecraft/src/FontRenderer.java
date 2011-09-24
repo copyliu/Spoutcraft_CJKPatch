@@ -211,6 +211,10 @@ public class FontRenderer {
 	//Spout End
 	
 	public void renderString(String var1, int var2, int var3, int var4, boolean var5) {
+		//cnmode
+		if ((TransTool.isTrans()) && 
+        	      (TransTool.getTransMod().renderString(this, var1, var2, var3, var4, var5))) return;
+		//cnmode
 		if(var1 != null) {
 			int var6;
 			if(var5) {
@@ -270,6 +274,14 @@ public class FontRenderer {
 	}
 
 	public int getStringWidth(String var1) {
+		///cnmode
+		if (TransTool.isTrans()) {
+			int width = TransTool.getTransMod().getStringWidth(this, var1);
+			if (width >= 0) {
+				return width;
+			}
+		}
+		///cnmode
 		if(var1 == null) {
 			return 0;
 		} else {

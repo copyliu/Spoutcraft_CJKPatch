@@ -4,26 +4,33 @@
 
 package net.minecraft.src;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class StringTranslate
 {
 
-    private StringTranslate()
-    {
-        translateTable = new Properties();
-        try
-        {
-            translateTable.load((net.minecraft.src.StringTranslate.class).getResourceAsStream("/lang/en_US.lang"));
-            translateTable.load((net.minecraft.src.StringTranslate.class).getResourceAsStream("/lang/stats_US.lang"));
-        }
-        catch(IOException ioexception)
-        {
-            ioexception.printStackTrace();
-        }
-    }
-
+	private StringTranslate() {
+		translateTable = new Properties();
+		try {//修改以支持UTF8编码
+			InputStreamReader isr = new InputStreamReader(StringTranslate.class.getResourceAsStream("/lang/en_US.lang"), "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
+			translateTable.load(br);
+			br.close();
+			isr.close();
+			isr = new InputStreamReader(StringTranslate.class.getResourceAsStream("/lang/stats_US.lang"), "UTF-8");
+			br = new BufferedReader(isr);
+			translateTable.load(br);
+			br.close();
+			isr.close();
+		} catch (IOException localIOException) {
+			localIOException.printStackTrace();
+		}
+  }
+  
+  
     public static StringTranslate getInstance()
     {
         return instance;
