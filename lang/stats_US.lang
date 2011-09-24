@@ -1,0 +1,83 @@
+gui.achievements=成就
+gui.stats=统计
+
+stat.generalButton=一般
+stat.blocksButton=方块
+stat.itemsButton=物品
+
+stat.used=使用次数
+stat.mined=开采次数
+stat.depleted=消耗次数
+stat.crafted=合成次数
+
+stat.startGame=离开世界次数
+stat.createWorld=创建世界数
+stat.loadWorld=加载世界次数
+stat.joinMultiplayer=加入多人游戏次数
+stat.leaveGame=退出游戏次数
+
+stat.playOneMinute=游戏时长(分)
+
+stat.walkOneCm=步行距离
+stat.fallOneCm=跌落距离
+stat.swimOneCm=游泳距离
+stat.flyOneCm=飞行距离
+stat.climbOneCm=攀爬距离
+stat.diveOneCm=潜水距离
+stat.minecartOneCm=乘矿车距离
+stat.boatOneCm=乘船距离
+stat.pigOneCm=骑猪距离
+stat.jump=跳跃次数
+stat.drop=丢弃物品次数
+
+stat.damageDealt=输出伤害数
+stat.damageTaken=承受伤害数
+stat.deaths=死亡次数
+stat.mobKills=击杀怪物/动物数
+stat.playerKills=击杀玩家数
+stat.fishCaught=捕鱼数
+
+stat.mineBlock=%1$s 被开采
+stat.craftItem=%1$s 被合成
+stat.useItem=%1$s 被使用
+stat.breakItem=%1$s 被消耗
+
+achievement.get=获得新成就!
+
+achievement.taken=已获得!
+
+achievement.requires=需要 '%1$s'
+achievement.openInventory=盘点库存
+achievement.openInventory.desc=按 '%1$s' 以打开你的背包.
+achievement.mineWood=获得木材
+achievement.mineWood.desc=攻击一棵树直到一块原木弹出
+achievement.buildWorkBench=基准
+achievement.buildWorkBench.desc=使用四块木材合成一个工作台
+achievement.buildPickaxe=开采时间!
+achievement.buildPickaxe.desc=使用木材和棍制造一把镐
+achievement.buildFurnace=热点
+achievement.buildFurnace.desc=使用八块石材建造一个熔炉
+achievement.acquireIron=获得硬件
+achievement.acquireIron.desc=熔炼一块铁锭
+achievement.buildHoe=耕种时间!
+achievement.buildHoe.desc=使用木材和棍制造一把锄头
+achievement.makeBread=烤面包
+achievement.makeBread.desc=将小麦制作成面包
+achievement.bakeCake=扎营
+achievement.bakeCake.desc=小麦,糖,牛奶和鸡蛋!
+achievement.buildBetterPickaxe=获得一项升级
+achievement.buildBetterPickaxe.desc=建造一个更好的斧头
+achievement.cookFish=美味的鱼
+achievement.cookFish.desc=捕捉并烤鱼!
+achievement.onARail=在铁轨上
+achievement.onARail.desc=乘坐矿车从出发点至少行驶1公里 
+achievement.buildSword=打击时间!
+achievement.buildSword.desc=使用木材和棍制造一把剑
+achievement.killEnemy=怪物猎人
+achievement.killEnemy.desc=攻击并消灭一个怪物
+achievement.killCow=奶牛翻转者
+achievement.killCow.desc=收获一些皮革
+achievement.flyPig=决不可能 (When Pigs Fly)
+achievement.flyPig.desc=将猪从悬崖上击落
+achievement.snipeSkeleton=狙击对决
+achievement.snipeSkeleton.desc=从50米外使用弓箭杀死一个骷髅射手 (Skeleton)
