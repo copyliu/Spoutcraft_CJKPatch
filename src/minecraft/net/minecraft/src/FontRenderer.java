@@ -135,7 +135,10 @@ public class FontRenderer {
 			GL11.glColor3f((float)var11 / 255.0F, (float)var12 / 255.0F, (float)var22 / 255.0F);
 			GL11.glEndList();
 		}
-
+		//cnmode start
+        if (TransTool.isTrans())
+            TransTool.getTransMod().register(var3);
+	//cnmode end
 	}
 	
 	public void drawStringWithShadow(String var1, int var2, int var3, int var4) {
