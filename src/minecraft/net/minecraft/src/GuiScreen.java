@@ -260,6 +260,7 @@ public class GuiScreen extends Gui {
 					this.mc.toggleFullscreen();
 					return;
 				}
+				
 				//this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());  //cnmode del this line
 			}
 			//Spout - End of vanilla code
@@ -285,11 +286,21 @@ public class GuiScreen extends Gui {
 					e.printStackTrace();
 				}
 			} else {
+				//cnmode start
+				//防止退格兩次
+				if (cnMode && Keyboard.getEventKeyState()&& Keyboard.getEventKey() == 14) {
+					System.out.println("BS GET!!");
+					//this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+					return;
+				}
+				//cnmode end	
 				if (cnMode || Keyboard.getEventKeyState()) {//若为中文连续输入过程中则取消检测
 					//System.out.println("chcode="+(int)chcode+"="+chcode+","+Keyboard.getEventKey());
+
 					if (Keyboard.getEventKey() == Keyboard.KEY_F12) {
 						chcode = '\247';
 					}
+				
 					keyTyped(chcode, Keyboard.getEventKey());
 				}
 			}
