@@ -34,9 +34,9 @@ public class TransTool {
 			System.out.println("Loaded config file faild.");
 		}
 		if(config.getProperty("code").toLowerCase().equals("auto")){
-			qr.code=java.nio.charset.Charset.defaultCharset().toString().toLowerCase();
+			GuiScreen.code=java.nio.charset.Charset.defaultCharset().toString().toLowerCase();
 		}else{
-			qr.code=config.getProperty("code");
+			GuiScreen.code=config.getProperty("code");
 		}
 		if("true".equalsIgnoreCase(config.getProperty("mod.trans"))){
 			trySetValue("ModLoader","modTrans",true);
@@ -59,7 +59,7 @@ public class TransTool {
 		}
 	}
 	public static Properties getStringTranslateProps() {
-		return (Properties) getPrivateValue(wv.class, wv.a(), 1);//wv.a()=StringTranslate.getInstance()
+		return (Properties) getPrivateValue(StringTranslate.class, StringTranslate.getInstance(), 1);//StringTranslate.a()=StringTranslate.getInstance()
 
 	}
 	

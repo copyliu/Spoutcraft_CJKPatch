@@ -67,7 +67,7 @@ public class TransCN extends AbstractTransMod {
 	}
 	
 	@Override
-	public void register(ur re) {
+	public void register(RenderEngine re) {
 		super.register(re);
 		createImage(TransResource.chineseStr.toString());
 		exImage = new ExImage();
@@ -109,7 +109,7 @@ public class TransCN extends AbstractTransMod {
 							fm.getHeight() * j + fm.getAscent());*/
 				}
 			}
-			textImageId[page] = renderEngine.a(imgTemp);//allocateAndSetupTexture
+			textImageId[page] = renderEngine.allocateAndSetupTexture(imgTemp);//allocateAndSetupTexture
 		}
 	}
 
@@ -128,7 +128,7 @@ public class TransCN extends AbstractTransMod {
 	 * @param flag
 	 *            是否阴影
 	 */
-	public boolean renderString(kh fr, String s, int i, int j, int k,boolean flag) {
+	public boolean renderString(FontRenderer fr, String s, int i, int j, int k,boolean flag) {
 		if (s == null || s.trim().length() <= 0) {
 			return true;
 		}
@@ -137,7 +137,7 @@ public class TransCN extends AbstractTransMod {
 			k = (k & 0xfcfcfc) >> 2;
 			k += l;
 		}
-		GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, fr.a);
+		GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, fr.fontTextureName);
 		float f = (float) (k >> 16 & 0xff) / 255F;
 		float f1 = (float) (k >> 8 & 0xff) / 255F;
 		float f2 = (float) (k & 0xff) / 255F;
@@ -147,24 +147,24 @@ public class TransCN extends AbstractTransMod {
 		}
 		GL11.glColor4f(f, f1, f2, f3);
 
-		fr.d.clear();
+		fr.buffer.clear();
 		GL11.glPushMatrix();
 		GL11.glTranslatef(i, j, 0.0F); // 移动到指定位置
 		for (int index = 0; index < s.length(); index++) {
 			Character ch = s.charAt(index);//此处及下k1与原文件不同，因此下文为++而非+=2
 			if (CharacterUtils.isAddin(ch)) {
 				//TODO:修复对省略号处理的异常
-				if(fr.d.position() > 0) {
-            		fr.d.flip();
-                    GL11.glCallLists(fr.d);
-                    fr.d.clear();
+				if(fr.buffer.position() > 0) {
+            		fr.buffer.flip();
+                    GL11.glCallLists(fr.buffer);
+                    fr.buffer.clear();
         		}
 				draw(ch);
 				GL11.glTranslatef(fm_game.charWidth(ch), 0.0F, 0.0F);
 				continue;
 			}
 			
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, fr.a);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, fr.fontTextureName);
 
 			for (; s.length() > index + 1 && s.charAt(index) == '\247'; index ++) {//见ch
 				int j1 = "0123456789abcdef".indexOf(s.toLowerCase().charAt(
@@ -172,33 +172,33 @@ public class TransCN extends AbstractTransMod {
 				if (j1 < 0 || j1 > 15) {
 					j1 = 15;
 				}
-				fr.d.put(fr.c + 256 + j1 + (flag ? 16 : 0));
-				if (fr.d.remaining() == 0) {
-					fr.d.flip();
-					GL11.glCallLists(fr.d);
-					fr.d.clear();
+				fr.buffer.put(fr.fontDisplayLists + 256 + j1 + (flag ? 16 : 0));
+				if (fr.buffer.remaining() == 0) {
+					fr.buffer.flip();
+					GL11.glCallLists(fr.buffer);
+					fr.buffer.clear();
 				}
 			}
 			if (index < s.length()) {
-				int k1 = sb.originalCharacters.indexOf(ch);
+				int k1 = ChatAllowedCharacters.originalCharacters.indexOf(ch);
 				if (k1 >= 0) {
-					fr.d.put(fr.c + k1 + 32);
+					fr.buffer.put(fr.fontDisplayLists + k1 + 32);
 				}
 			}
-			if (fr.d.remaining() == 0) {
-				fr.d.flip();
-				GL11.glCallLists(fr.d);
-				fr.d.clear();
+			if (fr.buffer.remaining() == 0) {
+				fr.buffer.flip();
+				GL11.glCallLists(fr.buffer);
+				fr.buffer.clear();
 			}
 		}
 
-		fr.d.flip();
-		GL11.glCallLists(fr.d);
+		fr.buffer.flip();
+		GL11.glCallLists(fr.buffer);
 		GL11.glPopMatrix();
 		return true;
 	}
 
-	public int getStringWidth(kh fr, String s) {
+	public int getStringWidth(FontRenderer fr, String s) {
 		int width = 0;
 		if (s == null)
 			return width;
@@ -209,9 +209,9 @@ public class TransCN extends AbstractTransMod {
 				if(ch == '\247') {//修复彩色字
 	                continue;
 	            }
-				int k = sb.originalCharacters.indexOf(ch);
+				int k = ChatAllowedCharacters.originalCharacters.indexOf(ch);
 				if (k >= 0) {
-					width += fr.b[k + 32];
+					width += fr.charWidth[k + 32];
 				}
 			}
 		}
@@ -239,14 +239,14 @@ public class TransCN extends AbstractTransMod {
 			g = imgTemp.createGraphics();
 	        g.setColor(Color.WHITE);
 			g.setFont(font);
-			exTextId[page] = renderEngine.a(imgTemp);//allocateAndSetupTexture
+			exTextId[page] = renderEngine.allocateAndSetupTexture(imgTemp);//allocateAndSetupTexture
 		}
 		
 		void add(Character ch) {
 			TransResource.exStr.append(ch);
 			//改动以修复部分内容显示的异常：如省略号
 			g.drawString(ch.toString(), x * NORMALWIDTH, y * fm.getHeight() + fm.getAscent());//getCharWidth(ch)
-			renderEngine.a(imgTemp, exTextId[page]);//setupTexture
+			renderEngine.setupTexture(imgTemp, exTextId[page]);//setupTexture
 			if(x<ttMaxWidth - 1) {
 				x++;
 			} else if(y<ttMaxHeight -1 ) {

@@ -29,7 +29,7 @@ public class CharacterUtils {
 		if(ch<0x80||ch==0x192||ch==0x2302||ch=='\247')//修复彩色字
 			return false;
 		if(ch<=0xff) {
-			if(sb.originalCharacters.indexOf(ch) >= 0) {
+			if(ChatAllowedCharacters.originalCharacters.indexOf(ch) >= 0) {
 				return false;
 			}
 		}

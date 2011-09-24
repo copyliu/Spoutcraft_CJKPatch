@@ -1,3 +1,4 @@
+package net.minecraft.src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,7 +13,7 @@ public class ModTrans {
 	static PrintStream printstream;
 	static PrintStream printstreamEn;
 	public static void initModOut(){
-		File f = Minecraft.b();
+		File f = Minecraft.getMinecraftDir();
 		String filenameEn="ModTransTextEn.txt";
 		String filename="ModTransText.txt";
         String pathEn = f.getPath()+"/"+filenameEn;

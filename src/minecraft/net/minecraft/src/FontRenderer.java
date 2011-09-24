@@ -16,10 +16,10 @@ import com.pclewis.mcpatcher.mod.TextureUtils;
 
 public class FontRenderer {
 
-	private int[] charWidth = new int[256];
+	public int[] charWidth = new int[256];
 	public int fontTextureName = 0;
-	private int fontDisplayLists;
-	private IntBuffer buffer = GLAllocation.createDirectIntBuffer(1024 /*GL_FRONT_LEFT*/);
+	public int fontDisplayLists;
+	public IntBuffer buffer = GLAllocation.createDirectIntBuffer(1024 /*GL_FRONT_LEFT*/);
 
 
 	public FontRenderer(GameSettings var1, String var2, RenderEngine var3) {
